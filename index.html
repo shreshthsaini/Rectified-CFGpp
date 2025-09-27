@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rectified-CFG++ for Flow Based Models</title>
+  <link href="./style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="content">
+  <h1><strong>Rectified-CFG++ for Flow Based Models</strong></h1>
+  <p id="authors" style="text-align:center; font-size:1.1em;">
+    Shreshth Saini, Shashank Gupta, Alan C. Bovik <br>
+    The University of Texas at Austin <br>
+    <span style="font-size:0.95em;">
+      {saini.2, shashank.gupta}@utexas.edu
+    </span>
+  </p>
+  <p style="text-align:center; font-size:1.1em; margin:1em 0;">
+    <a href="./data/pdfs/Rect_CFGpp_Neurips-compressed-names.pdf" target="_blank">[Paper]</a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="https://arxiv.org/abs/XXXXX" target="_blank">[ArXiv]</a>
+    &nbsp;&nbsp;&nbsp;
+    <a href="https://github.com/rectified-cfgpp/Rectified-CFGpp/tree/main" target="_blank">[Code]</a>
+  </p>
+  <p style="text-align:center; font-size:1em; margin-top:1em;">
+    <em>Accepted: NeurIPS 2025</em>
+  </p>
+    
+    <div style="text-align:center;">
+      <div>
+        <p>
+          <strong>Rectified-CFG++</strong> is a training-free, geometry-aware guidance scheme for flow-based text-to-image models.
+          By replacing the naïve extrapolation of classifier-free guidance with a predictor–corrector
+          integrator that stays on the learned data manifold, we eliminate structural
+          artifacts while improving prompt alignment, generation quality and sampling efficiency.
+        </p>
+      </div>
+      <div>
+        <img src="./data/figures/geometric.jpg" alt="Geometric Interpretation" style="width:100%;">
+        <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em; font-size:0.9em;">
+          Geometric interpretation of our method
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <h2 style="text-align:center;">Abstract</h2>
+    <p>
+      Classifier-free guidance (CFG) is the workhorse for steering large diffusion models toward
+      text-conditioned targets, yet its naïve application to rectified-flow (RF) based models provokes
+      severe off-manifold drift, yielding visual artifacts, text misalignment, and brittle behaviour.
+      We present <strong>Rectified-CFG++</strong>, an adaptive predictor–corrector guidance that couples
+      the deterministic efficiency of rectified flows with a geometry-aware conditioning rule.
+      Each inference step first executes a conditional RF update to stay on the learned transport
+      path, then applies a scheduled interpolation between conditional and unconditional velocity
+      fields. We prove marginal consistency and bounded on-manifold trajectories, ensuring
+      stability across guidance strengths. Extensive experiments on large-scale RF backbones
+      (Flux, Stable Diffusion 3/3.5, Lumina) show that Rectified-CFG++ consistently outperforms
+      standard CFG on FID, CLIP-Score, ImageReward, Aesthetic Score, and HPS-v2—while
+      reducing artifacts and accelerating convergence.
+    </p>
+    
+    <img src="./data/figures/rec-cfgpp-compare-horizontal.jpg" alt="Teaser: comparison of CFG vs Rectified-CFG++" style="width:100%; margin-top:1em;">
+    <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em;">
+      Figure: Visual comparison showing the improvements achieved by Rectified-CFG++ over standard CFG.
+    </p>
+  </div>
+
+  <div class="content">
+    <h2 style="text-align:center;">Contributions</h2>
+    <ul>
+      <li><strong>Rectified-CFG++:</strong> A novel predictor–corrector guidance scheme for flow-based T2I models that
+        replaces linear extrapolation with time-scheduled interpolation, preserving manifold geometry.</li>
+      <li><strong>Theoretical Foundations:</strong> Rigorous proofs showing marginal consistency and bounded
+        deviation from the learned data manifold under mild assumptions (§3 &amp; Appendix).</li>
+      <li><strong>Empirical Validation:</strong> Comprehensive evaluations on Flux, Stable Diffusion 3/3.5, and Lumina
+        across MS-COCO, LAION-Aesthetic, and T2I-CompBench, demonstrating superior quality, prompt alignment, and sampling efficiency (§4).</li>
+    </ul>
+    
+    
+  </div>
+
+  <div class="content">
+    <h2 style="text-align:center;">Method Overview</h2>
+    <div style="display: flex; align-items: flex-start; gap: 2em; margin: 1em 0;">
+      <div style="flex: 2;">
+        <p>
+          Our method introduces a predictor-corrector approach that maintains trajectories on the learned data manifold
+          while providing effective guidance. The key insight is to replace linear extrapolation with scheduled interpolation.
+        </p>
+        <p>
+          Instead of the naive extrapolation used in standard CFG, which can lead to off-manifold drift, our approach
+          first performs a conditional rectified flow update to stay on the learned transport path, then applies a
+          scheduled interpolation between conditional and unconditional velocity fields. This ensures stable generation
+          while maintaining the benefits of guidance.
+        </p>
+      </div>
+      <div style="flex: 1;">
+        <img src="./data/figures/algo.png" alt="Algorithm Overview" style="width:100%;">
+        <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em; font-size:0.9em;">
+          Algorithm overview
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="content">
+    <h2 style="text-align:center;">Comparison with Existing Guidance Methods</h2>
+    <div style="display: flex; align-items: flex-start; gap: 2em; margin: 1em 0;">
+      <div style="flex: 1;">
+        <p>
+          We conduct comprehensive comparisons between existing guidance methods and our 
+          Rectified-CFG++. Standard CFG applies linear extrapolation between conditional and unconditional 
+          predictions, which often leads to off-manifold drift in rectified flow models.
+        </p>
+        
+        <div style="text-align: center;">
+          <img src="./data/figures/guidance-compare.png" alt="Guidance Strategy Comparison" style="width:80%; margin:1em 0;">
+          <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em; font-size:0.9em;">
+            Quantitative comparison showing superior performance across multiple metrics
+          </p>
+        </div>
+      </div>
+      <div style="flex: 1;">
+        <p>
+          The visual analysis reveals the fundamental difference in guidance behavior. While other methods 
+          struggle to generate artifact-free images or poorly align with text prompts, 
+          our method maintains natural appearance while improving prompt adherence.
+        </p>
+        <div style="text-align: center;">
+          <img src="./data/figures/guidance.png" alt="Guidance Analysis" style="width:52%; margin-top:1em;">
+          <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em; font-size:0.9em;">
+            Visual comparison highlighting reduced artifacts and improved quality
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <h2 style="text-align:center;">Qualitative Results</h2>
+    <p>
+      Our method produces higher quality images with better text alignment and fewer artifacts compared to standard CFG.
+      We demonstrate improvements across various aspects of visual quality and generation fidelity.
+    </p>
+    
+    <div style="display: grid; grid-template-columns: 1.38fr 1fr; gap: 1.5em; margin: 1.5em 0;">
+      <div>
+        <img src="./data/figures/rec-cfgpp-samples.jpg" alt="Sample Results" style="width:100%;">
+        <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em; font-size:0.9em;">
+          High-quality samples generated using Rectified-CFG++
+        </p>
+      </div>
+      <div>
+        <img src="./data/figures/flux-compare.jpg" alt="Flux Qualitative Comparison" style="width:100%;">
+        <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em; font-size:0.9em;">
+          No Guidance vs. CFG vs. Rectified-CFG++ 
+        <img src="./data/figures/flux-compare.png" alt="Flux Comparison" style="width:100%;">
+        
+        <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em; font-size:0.9em;">
+          Quantitative comparison on Flux model
+        </p>  
+      </div>
+      
+    
+    </div>
+    
+    <h3 style="text-align:center; margin-top: 2em;">Text Legibility in Generated Images</h3>
+    <p>
+      One of the key advantages of Rectified-CFG++ is the significant improvement in text legibility within generated images. 
+      Standard CFG often produces blurry, distorted, or illegible text due to off-manifold drift, while our method 
+      maintains sharp, readable text by preserving manifold trajectories.
+    </p>
+    <img src="./data/figures/legibility.png" alt="Text Legibility Comparison" style="width:100%; margin:1em 0;">
+    <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em;">
+      Figure: Comparison of text legibility in generated images. Rectified-CFG++ produces sharper, more readable text compared to standard CFG.
+    </p>
+    
+    <p style="margin-top: 1em;">
+      <strong>Key Improvements in Text Generation:</strong>
+    </p>
+    <ul style="margin-top: 0.5em;">
+      <li><strong>Character Clarity:</strong> Individual letters are more distinct and properly formed</li>
+      <li><strong>Font Consistency:</strong> Better preservation of intended font styles and weights</li>
+      <li><strong>Spatial Arrangement:</strong> Improved text positioning and alignment within scenes</li>
+      <li><strong>Context Integration:</strong> Text appears more naturally integrated with surrounding visual elements</li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <h2 style="text-align:center;">Quantitative Evaluation</h2>
+    <p>
+      We conduct extensive quantitative evaluation across multiple benchmarks and metrics to demonstrate 
+      the effectiveness of our approach. Our results show consistent improvements across all evaluation criteria.
+    </p>
+    
+    <div style="display: flex; gap: 1.5em; margin: 1.5em 0; align-items: stretch;">
+      <div style="flex: 0 0 60%;">
+        <img src="./data/figures/coco-10k.png" alt="COCO-10k Results" style="width:100%; height:auto;">
+        <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em; font-size:0.9em;">
+          Comprehensive evaluation on COCO-10k dataset
+        </p>
+      </div>
+      <div style="flex: 0 0 40%;">
+        <img src="./data/figures/t2i-comp.png" alt="T2I-CompBench Results" style="width:73%; height:auto;">
+        <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em; font-size:0.9em;">
+          Results on T2I-CompBench evaluation
+        </p>
+      </div>
+    </div>
+    
+    <p style="margin-top: 1em;">
+      The evaluation spans multiple aspects of generation quality:
+    </p>
+    <ul style="margin-top: 0.5em;">
+      <li><strong>Perceptual Quality:</strong> FID and Aesthetic Score improvements across all model architectures</li>
+      <li><strong>Text Alignment:</strong> Enhanced CLIP scores indicating better prompt adherence</li>
+      <li><strong>Human Preference:</strong> Superior ImageReward and HPS-v2 scores reflecting human aesthetic preferences</li>
+      <li><strong>Compositional Understanding:</strong> Better performance on complex multi-object and spatial relationship prompts</li>
+      <li><strong>Efficiency:</strong> Faster convergence requiring 20-30% fewer function evaluations</li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <h2 style="text-align:center;">User Study</h2>
+    <p>
+      Human evaluation demonstrates the preference for our method across different quality aspects.
+    </p>
+    <img src="./data/figures/user_study.png" alt="User Study Results" style="width:100%; margin:1em 0;">
+    <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em;">
+      Figure: User study results showing human preference for Rectified-CFG++.
+    </p>
+  </div>
+
+  <div class="content">
+    <h2 style="text-align:center;">Intermediate Trajectories</h2>
+    <p>
+      Analysis of intermediate generation trajectories showing improved stability and convergence.
+    </p>
+    <img src="./data/figures/intermediate.png" alt="Intermediate Trajectory Analysis" style="width:100%; margin:1em 0;">
+    <p style="text-align:center; font-style:italic; color:#666; margin-top:0.5em;">
+      Figure: Visualization of intermediate generation trajectories comparing CFG vs Rectified-CFG++.
+    </p>
+  </div>
+
+  <div class="content">
+  <h2 style="text-align:center;">BibTeX</h2>
+  <pre style="background-color: #f5f5f5; padding: 1em; border-radius: 5px; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.9em;">
+@inproceedings{saini2025rectifiedcfgpp,
+  title     = {Rectified-CFG++ for Flow Based Models},
+  author    = {Shreshth Saini and Shashank Gupta and Alan C. Bovik},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2025}
+}
+  </pre>
+</div>
+
+  <div class="content" id="acknowledgements">
+    <p><strong>Acknowledgements</strong>: Code to be released upon publication. We thank the Flux, Stable Diffusion
+    and Lumina teams for open‐source models and data.</p>
+  </div>
+</body>
+</html>
