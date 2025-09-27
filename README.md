@@ -79,6 +79,14 @@ python demo.py \
 
 Generated images will be saved in the specified output directory with filenames indicating the guidance scale and number of steps used.
 
+## 🖼️ Visual Highlights
+
+![Geometry-aware guidance keeps trajectories on-manifold.](data/figures/geometric.jpg)
+*Predictor–corrector updates prevent drift away from the learned data manifold.*
+
+![Rectified-CFG++ improves visual quality and alignment across prompts.](data/figures/rec-cfgpp-samples.jpg)
+*Representative samples showcasing improved prompt adherence and perceptual quality.*
+
 ## 📚 Citation
 
 If you find Rectified-CFG++ useful in your research, please cite our NeurIPS 2025 paper:
