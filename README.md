@@ -1,6 +1,6 @@
 # Rectified-CFG++ for Flow Based Models
 
-[![ArXiv](https://img.shields.io/badge/arXiv)](https://arxiv.org/abs/2510.07631) [![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
+[![ArXiv](https://img.shields.io/badge/arXiv-2510.07631-b31b1b.svg)](https://arxiv.org/abs/2510.07631) [![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
 
 **Authors:** Shreshth Saini, Shashank Gupta, Alan C. Bovik  
 The University of Texas at Austin
