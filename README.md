@@ -16,7 +16,7 @@ A **training-free**, **geometry-aware** guidance scheme for flow-based text-to-i
 - **On-Manifold Sampling**  
   Predictor–corrector updates keep trajectories on the data manifold.
 - **Training-Free**  
-  Drop-in replacement for standard CFG—no additional training or fine-tuning required.
+  Drop-in replacement for standard CFG. No additional training or fine-tuning required.
 - **Model-Agnostic**  
   Works with any transformer-based rectified-flow T2I backbone (e.g., Flux, SD3/3.5, Lumina).
 - **Stable Across Scales**  
@@ -102,4 +102,4 @@ If you find Rectified-CFG++ useful in your research, please cite our NeurIPS 202
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is released under the MIT License. See [LICENSE](LICENSE).
