@@ -34,10 +34,10 @@ git clone https://github.com/shreshthsaini/Rectified-CFGpp.git
 cd Rectified-CFGpp
 ```
 
-2. Create and activate a virtual environment using the provided YAML configuration file:
+2. Install the dependencies (Python 3.10+, a CUDA GPU, and a Hugging Face login that has accepted the [Stable Diffusion 3.5](https://huggingface.co/stabilityai/stable-diffusion-3.5-large) license):
 ```bash
-conda env create -f environment.yaml
-conda activate rectcfgpp
+pip install -r requirements.txt
+huggingface-cli login
 ```
 
 ## 🚀 Quick Start
@@ -78,6 +78,10 @@ python demo.py \
 - `--seed`: Random seed for reproducibility (default: 42)
 
 Generated images will be saved in the specified output directory with filenames indicating the guidance scale and number of steps used.
+
+## 🤗 Demo Space
+
+`space/` holds a Gradio app that renders Rectified-CFG++ next to standard CFG at the same seed and scale. Host your own copy with `python space/deploy.py` from a logged-in account (Gradio Spaces need a Hugging Face PRO plan, which also unlocks ZeroGPU). The script uploads the app, stores your token as the `HF_TOKEN` secret, and requests ZeroGPU.
 
 ## 🖼️ Visual Highlights
 
