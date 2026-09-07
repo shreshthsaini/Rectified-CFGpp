@@ -79,10 +79,6 @@ python demo.py \
 
 Generated images will be saved in the specified output directory with filenames indicating the guidance scale and number of steps used.
 
-## 🤗 Demo Space
-
-`space/` holds a Gradio app that renders Rectified-CFG++ next to standard CFG at the same seed and scale. Host your own copy with `python space/deploy.py` from a logged-in account (Gradio Spaces need a Hugging Face PRO plan, which also unlocks ZeroGPU). The script uploads the app, stores your token as the `HF_TOKEN` secret, and requests ZeroGPU.
-
 ## 🖼️ Visual Highlights
 
 ![Geometry-aware guidance keeps trajectories on-manifold.](data/figures/geometric.jpg)
